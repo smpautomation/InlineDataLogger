@@ -99,7 +99,7 @@ import android.content.BroadcastReceiver;
 
 public class MainActivity extends AppCompatActivity implements MainActivity_getmachinedata.AsyncResponse, MainActivity_insertstatus.AsyncResponse, MainActivity_machineinsertstatus.AsyncResponse, MainActivity_getprocessflow.AsyncResponse, MainActivity_getcurrentprocess.AsyncResponse, MainActivity_getLotDetails.AsyncResponse, MainActivity_getLastLotData.AsyncResponse{
     //region variable declarations
-    Button btnOP, btnAdjustment, btnChangeLot, btnNoWIP, btnBreaktime, btnCalib, btnUndereepm, btnStandby, btnSetup, btnMachineStop, btnmanualenc, btnOPProto, btnOthers;
+    Button btnOP, btnAdjustment, btnChangeLot, btnNoWIP, btnBreaktime, btnCalib, btnUndereepm, btnStandby, btnStandbyNoOperator, btnSetup, btnMachineStop, btnmanualenc, btnOPProto, btnOthers;
     ImageButton qrButton;
     IntentIntegrator intentIntegrator;
     Activity activity;
@@ -118,8 +118,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
     MediaPlayer mp;
     CountDownTimer cTimer = null;
     CountDownTimer ccTimer = null;
-    Boolean bop = false, bmerr = false, bchlt = false, bnw = false, bbt = false, bms = false, bueepm = false, bst = false, bmain = false, bmf = false, bopp = false, bothers = false;
-    Boolean[] bolarray = {bop, bmerr, bchlt, bnw, bbt, bms, bueepm, bst, bmain, bmf, bopp, bothers};
+    Boolean bop = false, bmerr = false, bchlt = false, bnw = false, bbt = false, bms = false, bueepm = false, bst = false, bstOP = false, bmain = false, bmf = false, bopp = false, bothers = false;
+    Boolean[] bolarray = {bop, bmerr, bchlt, bnw, bbt, bms, bueepm, bst, bstOP, bmain, bmf, bopp, bothers};
     Intent intent;
     TableRow row1pflow, row2pflow, row3pflow, row4pflow, row5pflow, bufferrow;
     Button p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p0;
@@ -188,14 +188,14 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
         //endregion
 
         //region findViewById
-        txtOperator = findViewById(R.id.txtOperator);
-        txtLotNo = findViewById(R.id.txtLotNo);
-        txtModel = findViewById(R.id.txtModel);
+        txtOperator = findViewById(R.id.txt_operator);
+        txtLotNo = findViewById(R.id.txt_lot_no);
+        txtModel = findViewById(R.id.txt_model);
         txtCurrStats = findViewById(R.id.txtCurStat);
-        txtMachineName = findViewById(R.id.txtMachineName);
-        txtLocation = findViewById(R.id.txtLocation);
-        txtIPAdd = findViewById(R.id.txtIPAdd);
-        txtRemarks = findViewById(R.id.txtRemarks);
+        txtMachineName = findViewById(R.id.txt_machine_name);
+        txtLocation = findViewById(R.id.txt_location);
+        txtIPAdd = findViewById(R.id.txt_ip_address);
+        txtRemarks = findViewById(R.id.txt_remarks);
         txtCharger = findViewById(R.id.ChargerText);
         btnOP = findViewById(R.id.btn_operation);
         btnAdjustment = findViewById(R.id.btn_adjustment);
@@ -206,11 +206,12 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
         btnCalib = findViewById(R.id.btn_calib);
         btnUndereepm = findViewById(R.id.btn_undereepm);
         btnStandby = findViewById(R.id.btn_Standby);
+        btnStandbyNoOperator = findViewById(R.id.btn_StandbyNoOperator);
         btnSetup = findViewById(R.id.btn_Setup);
         btnMachineStop = findViewById(R.id.btn_machinestop);
         btnmanualenc = findViewById(R.id.btn_manualencode);
         btnOthers = findViewById(R.id.btn_others);
-        constraintLayout = findViewById(R.id.constraintlayout);
+        //constraintLayout = findViewById(R.id.constraintlayout);
         tv = findViewById(R.id.tv);
         row1pflow = findViewById(R.id.row1pflow);
         row2pflow = findViewById(R.id.row2pflow);
@@ -485,7 +486,7 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             return true;
         });
         btnStandby.setOnLongClickListener(v -> {
-            curr_stats = "Standby";
+            curr_stats = "Standby(No Plan)";
             txtCurrStats.setText(curr_stats);
             cancelTimerwaitforStop();
             cancelTimer();
@@ -493,6 +494,40 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
 
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_green));
             bst = true;
+            resetbtnColor();
+            /*alertdialogremarksinput();
+            txtRemarks.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+                @Override
+                public void afterTextChanged(Editable s) {
+                    txtCurrStats.setText(curr_stats);
+                    remarks = "";
+                    constraintLayout.setBackgroundColor(Color.argb(100, 255, 255, 255));
+                }
+            });*/
+            btnMachineStop.setEnabled(true);
+            main_insertstatus();
+            try{
+                sendData("13");// check patlite
+            }catch (Exception ex){
+                Toast.makeText(this, "Check Patlite Error: " + ex.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+            return true;
+        });
+        btnStandbyNoOperator.setOnLongClickListener(v -> {
+            curr_stats = "Standby(No Operator)";
+            txtCurrStats.setText(curr_stats);
+            cancelTimerwaitforStop();
+            cancelTimer();
+            //constraintLayout.setBackgroundColor(Color.argb(100, 255, 255, 255));
+
+            btnStandbyNoOperator.setBackground(ContextCompat.getDrawable(context, round_button_green));
+            bstOP = true;
             resetbtnColor();
             /*alertdialogremarksinput();
             txtRemarks.addTextChangedListener(new TextWatcher() {
@@ -1726,6 +1761,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bst = false;
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstOP = false;
+            btnStandbyNoOperator.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmain = false;
             btnSetup.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmf = false;
@@ -1749,6 +1786,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bst = false;
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstOP = false;
+            btnStandbyNoOperator.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmain = false;
             btnSetup.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmf = false;
@@ -1772,6 +1811,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bst = false;
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstOP = false;
+            btnStandbyNoOperator.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmain = false;
             btnSetup.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmf = false;
@@ -1795,6 +1836,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bst = false;
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstOP = false;
+            btnStandbyNoOperator.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmain = false;
             btnSetup.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmf = false;
@@ -1818,6 +1861,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bst = false;
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstOP = false;
+            btnStandbyNoOperator.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmain = false;
             btnSetup.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmf = false;
@@ -1841,6 +1886,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bst = false;
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstOP = false;
+            btnStandbyNoOperator.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmain = false;
             btnSetup.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmf = false;
@@ -1864,6 +1911,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnOP.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bst = false;
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstOP = false;
+            btnStandbyNoOperator.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmain = false;
             btnSetup.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmf = false;
@@ -1885,6 +1934,33 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnMachineStop.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bueepm = false;
             btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstOP = false;
+            btnStandbyNoOperator.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bop = false;
+            btnOP.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bmain = false;
+            btnSetup.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bmf = false;
+            btnCalib.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bopp = false;
+            btnOPProto.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bothers = false;
+            btnOthers.setBackground(ContextCompat.getDrawable(context, round_button_all));
+        }else if (bst) {
+            bmerr = false;
+            btnAdjustment.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bchlt = false;
+            btnChangeLot.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bnw = false;
+            btnNoWIP.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bbt = false;
+            btnBreaktime.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bms = false;
+            btnMachineStop.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bueepm = false;
+            btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bst = false;
+            btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bop = false;
             btnOP.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmain = false;
@@ -1910,6 +1986,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bst = false;
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstOP = false;
+            btnStandbyNoOperator.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bop = false;
             btnOP.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmf = false;
@@ -1933,6 +2011,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bst = false;
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstOP = false;
+            btnStandbyNoOperator.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmain = false;
             btnSetup.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bop = false;
@@ -1956,6 +2036,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bst = false;
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstOP = false;
+            btnStandbyNoOperator.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmain = false;
             btnSetup.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bop = false;
@@ -1979,6 +2061,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bst = false;
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstOP = false;
+            btnStandbyNoOperator.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmain = false;
             btnSetup.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bop = false;
@@ -2002,6 +2086,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bst = false;
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstOP = false;
+            btnStandbyNoOperator.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmain = false;
             btnSetup.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bop = false;
@@ -2018,7 +2104,7 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
         bnw = false;
         bbt = false;bms = false;
         bueepm = false;
-        bst = false;
+        bst = false; bstOP = false;
         bmain = false;
         bop = false;
         bmf = false;
