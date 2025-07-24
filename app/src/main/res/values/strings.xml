@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">RealTimeMonitoring</string>
+    <string name="machineset">Machine Setup Done Button can only be actived once you have updated the status</string>
+    <string name="note">Use this to record the current model that is on-going setup when Lot Traveller is not yet available</string>
+</resources>

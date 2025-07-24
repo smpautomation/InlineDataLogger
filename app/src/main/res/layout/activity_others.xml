@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintlayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".MainActivity"
+    android:keepScreenOn="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_StartUpShutDown"
+                android:layout_width="140dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="30dp"
+                android:background="@drawable/round_button_all"
+                android:text="Start-up/Shutdown"
+                android:textColor="@color/white"
+                app:icon="@drawable/round_button_green"
+                tools:ignore="HardcodedText" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_Datacheck"
+                android:layout_width="140dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/round_button_all"
+                android:text="Data ✓ / \nDimension ✓"
+                android:textColor="@color/white"
+                app:icon="@drawable/round_button_all"
+                tools:ignore="HardcodedText" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_JigVal"
+                android:layout_width="140dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/round_button_all"
+                android:text="Jig validation"
+                android:textColor="@color/white"
+                app:icon="@drawable/round_button_green"
+                tools:ignore="HardcodedText" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_meetorient"
+                android:layout_width="140dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/round_button_all"
+                android:text="Meeting/Orientation"
+                android:textColor="@color/white"
+                app:icon="@drawable/round_button_all"
+                tools:ignore="HardcodedText" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_machinechecklist"
+                android:layout_width="140dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="30dp"
+                android:background="@drawable/round_button_all"
+                android:text="Machine Checklist"
+                android:textColor="@color/white"
+                app:icon="@drawable/round_button_green"
+                tools:ignore="HardcodedText" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_waittoolings"
+                android:layout_width="140dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/round_button_all"
+                android:text="Waiting for Toolings"
+                android:textColor="@color/white"
+                app:icon="@drawable/round_button_all"
+                tools:ignore="HardcodedText" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_5s"
+                android:layout_width="140dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/round_button_all"
+                android:text="5s"
+                android:textColor="@color/white"
+                app:icon="@drawable/round_button_green"
+                tools:ignore="HardcodedText" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_waitengtech"
+                android:layout_width="140dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/round_button_all"
+                android:text="Waiting \nengineer/tech"
+                android:textColor="@color/white"
+                app:icon="@drawable/round_button_all"
+                tools:ignore="HardcodedText" />
+
+        </TableRow>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

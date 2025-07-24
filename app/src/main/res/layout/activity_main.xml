@@ -1,0 +1,791 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintlayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".MainActivity"
+    android:keepScreenOn="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="40dp"
+                android:text="AUTOMATION ENGINEERING DEPARTMENT\n                                 v1.5"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+            <TextView
+                android:id="@+id/ChargerText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+
+        </TableRow>
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="BT NAME"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="Machine Name:"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/txtMachineName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                tools:ignore="HardcodedText" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="Location:"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/txtLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="101dp"
+                tools:ignore="HardcodedText" />
+
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="IP Address:"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/txtIPAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="86dp"
+                tools:ignore="HardcodedText" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:text="Current Status:"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/txtCurStat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="63dp"
+                android:textSize="30sp"
+                tools:ignore="HardcodedText" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="Model:"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/txtModel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="116dp"
+                tools:ignore="HardcodedText" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="Lot No.:"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/txtLotNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="110dp"
+                tools:ignore="HardcodedText" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="Operator:"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/txtOperator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                tools:ignore="HardcodedText" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="Remarks:"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/txtRemarks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="99dp"
+                tools:ignore="HardcodedText" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row1pflow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            android:baselineAligned="false">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/p0"
+                android:layout_width="74dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="25dp"
+                android:background="@drawable/design_pflow"
+                android:clickable="false"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:icon="@drawable/design_pflow"
+                tools:ignore="HardcodedText"
+                />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/p1"
+                android:layout_width="74dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/design_pflow"
+                android:clickable="false"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:icon="@drawable/design_pflow"
+                tools:ignore="HardcodedText"
+                />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/p2"
+                android:layout_width="74dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/design_pflow"
+                android:clickable="false"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:icon="@drawable/design_pflow"
+                tools:ignore="HardcodedText" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/p3"
+                android:layout_width="74dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/design_pflow"
+                android:clickable="false"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:icon="@drawable/design_pflow"
+                tools:ignore="HardcodedText" />
+
+
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row2pflow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            android:baselineAligned="false">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/p4"
+                android:layout_width="74dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="25dp"
+                android:background="@drawable/design_pflow"
+                android:clickable="false"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:icon="@drawable/design_pflow"
+                tools:ignore="HardcodedText" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/p5"
+                android:layout_width="74dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/design_pflow"
+                android:clickable="false"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:icon="@drawable/design_pflow"
+                tools:ignore="HardcodedText"
+                />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/p6"
+                android:layout_width="74dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/design_pflow"
+                android:clickable="false"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:icon="@drawable/design_pflow"
+                tools:ignore="HardcodedText" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/p7"
+                android:layout_width="74dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/design_pflow"
+                android:clickable="false"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:icon="@drawable/design_pflow"
+                tools:ignore="HardcodedText" />
+
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row3pflow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            android:baselineAligned="false">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/p8"
+                android:layout_width="74dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="25dp"
+                android:background="@drawable/design_pflow"
+                android:clickable="false"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:icon="@drawable/design_pflow"
+                tools:ignore="HardcodedText" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/p9"
+                android:layout_width="74dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/design_pflow"
+                android:clickable="false"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:icon="@drawable/design_pflow"
+                tools:ignore="HardcodedText" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/p10"
+                android:layout_width="74dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/design_pflow"
+                android:clickable="false"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:icon="@drawable/design_pflow"
+                tools:ignore="HardcodedText" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/p11"
+                android:layout_width="74dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/design_pflow"
+                android:clickable="false"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:icon="@drawable/design_pflow"
+                tools:ignore="HardcodedText" />
+
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row4pflow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            android:baselineAligned="false">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/p12"
+                android:layout_width="74dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="25dp"
+                android:background="@drawable/design_pflow"
+                android:clickable="false"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:icon="@drawable/design_pflow"
+                tools:ignore="HardcodedText" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/p13"
+                android:layout_width="74dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/design_pflow"
+                android:clickable="false"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:icon="@drawable/design_pflow"
+                tools:ignore="HardcodedText" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/p14"
+                android:layout_width="74dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/design_pflow"
+                android:clickable="false"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:icon="@drawable/design_pflow"
+                tools:ignore="HardcodedText" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/p15"
+                android:layout_width="74dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/design_pflow"
+                android:clickable="false"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:icon="@drawable/design_pflow"
+                tools:ignore="HardcodedText" />
+
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row5pflow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            android:baselineAligned="false">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/p16"
+                android:layout_width="74dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="25dp"
+                android:background="@drawable/design_pflow"
+                android:clickable="false"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:icon="@drawable/design_pflow"
+                tools:ignore="HardcodedText" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/p17"
+                android:layout_width="74dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/design_pflow"
+                android:clickable="false"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:icon="@drawable/design_pflow"
+                tools:ignore="HardcodedText" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/p18"
+                android:layout_width="74dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/design_pflow"
+                android:clickable="false"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:icon="@drawable/design_pflow"
+                tools:ignore="HardcodedText" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/p19"
+                android:layout_width="74dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/design_pflow"
+                android:clickable="false"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:icon="@drawable/design_pflow"
+                tools:ignore="HardcodedText" />
+
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/bufferrow"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="20dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_operation"
+                android:layout_width="140dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="30dp"
+                android:background="@drawable/round_button_all"
+                android:text="Operation MassPro"
+                android:textColor="@color/white"
+                app:icon="@drawable/round_button_green"
+                tools:ignore="HardcodedText" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_operationproto"
+                android:layout_width="140dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/round_button_all"
+                android:text="Operation \nProto"
+                android:textColor="@color/white"
+                app:icon="@drawable/round_button_all"
+                tools:ignore="HardcodedText" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_Setup"
+                android:layout_width="140dp"
+                android:layout_height="66dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/round_button_all"
+                android:text="Setup"
+                android:textColor="@color/white"
+                app:icon="@drawable/round_button_all"
+                tools:ignore="HardcodedText" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_adjustment"
+                android:layout_width="140dp"
+                android:layout_height="66dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/round_button_all"
+                android:text="adjustment"
+                android:textColor="@color/white"
+                app:icon="@drawable/round_button_all"
+                tools:ignore="HardcodedText" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_Standby"
+                android:layout_width="140dp"
+                android:layout_height="66dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/round_button_all"
+                android:text="Standby"
+                android:textColor="@color/white"
+                app:icon="@drawable/round_button_all"
+                tools:ignore="HardcodedText" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_Breaktime"
+                android:layout_width="140dp"
+                android:layout_height="66dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/round_button_all"
+                android:text="Breaktime"
+                android:textColor="@color/white"
+                app:icon="@drawable/round_button_all"
+                tools:ignore="HardcodedText" />
+
+        </TableRow>
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_calib"
+                android:layout_width="140dp"
+                android:layout_height="66dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/round_button_all"
+                android:text="Calibration"
+                android:textColor="@color/white"
+                app:icon="@drawable/round_button_all"
+                tools:ignore="HardcodedText" />
+
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_undereepm"
+                android:layout_width="140dp"
+                android:layout_height="66dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/round_button_all"
+                android:text="Under EE/PM"
+                android:textColor="@color/white"
+                app:icon="@drawable/round_button_all"
+                tools:ignore="HardcodedText" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="2dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_nowip"
+                android:layout_width="140dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="30dp"
+                android:background="@drawable/round_button_all"
+                android:text="Waiting Raw Materials"
+                android:textColor="@color/white"
+                app:icon="@drawable/round_button_all"
+                tools:ignore="HardcodedText" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_others"
+                android:layout_width="140dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/round_button_all"
+                android:text="Others"
+                android:textColor="@color/white"
+                app:icon="@drawable/round_button_all"
+                tools:ignore="HardcodedText" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_changelot"
+                android:layout_width="140dp"
+                android:layout_height="66dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/round_button_all"
+                android:text="Flush Out"
+                android:textColor="@color/white"
+                app:icon="@drawable/round_button_all"
+                tools:ignore="HardcodedText" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_machinestop"
+                android:layout_width="140dp"
+                android:layout_height="66dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/round_button_all"
+                android:text="MACHINE STOP"
+                android:textColor="@color/white"
+                app:icon="@drawable/round_button_all"
+                tools:ignore="HardcodedText" />
+
+        </TableRow>
+
+
+
+        <ImageButton
+            android:id="@+id/qr_button"
+            android:layout_width="192dp"
+            android:layout_height="49dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/qr_scanner"
+            android:layout_marginTop="20dp"
+            tools:ignore="ContentDescription" />
+
+
+        <TextView
+            android:id="@+id/remindtxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please Flush Out first before scanning again"
+            tools:ignore="HardcodedText,SpUsage"
+            android:layout_gravity="center"
+            android:textSize="13dp"
+            android:visibility="gone"/>
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:id="@+id/btn_manualencode"
+            android:layout_gravity="center"
+            android:text="Manual Encode"
+            android:textSize="10sp"
+            tools:ignore="HardcodedText,SmallSp,SpUsage" />
+
+        <ImageButton
+            android:id="@+id/search"
+            android:layout_width="44dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="656dp"
+            android:layout_marginEnd="172dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_bluetooth_24"
+            tools:ignore="ContentDescription" />
+
+        <Button
+            android:id="@+id/connect"
+            android:layout_width="44dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="716dp"
+            android:layout_marginEnd="172dp"
+            android:text="C"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_bluetooth_24"
+            tools:ignore="ContentDescription,HardcodedText" />
+
+
+
+        <!--<ListView
+            android:id="@+id/listview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints,NestedScrolling"
+            android:visibility="gone" />-->
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/JP0061/AndroidStudioProjects/RealTimeMonitoring/app/src/main/res/drawable-v24/design_doneproc.xml" value="0.31837606837606836" />
+        <entry key="..\:/Users/JP0061/AndroidStudioProjects/RealTimeMonitoring/app/src/main/res/drawable-v24/design_notdoneproc.xml" value="0.31837606837606836" />
+        <entry key="..\:/Users/JP0061/AndroidStudioProjects/RealTimeMonitoring/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1735042735042735" />
+        <entry key="..\:/Users/JP0061/AndroidStudioProjects/RealTimeMonitoring/app/src/main/res/drawable/design_currentproc.xml" value="0.3355855855855856" />
+        <entry key="..\:/Users/JP0061/AndroidStudioProjects/RealTimeMonitoring/app/src/main/res/drawable/design_pflow.xml" value="0.3355855855855856" />
+        <entry key="..\:/Users/JP0061/AndroidStudioProjects/RealTimeMonitoring/app/src/main/res/drawable/ic_inline_data.xml" value="0.31837606837606836" />
+        <entry key="..\:/Users/JP0061/AndroidStudioProjects/RealTimeMonitoring/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1735042735042735" />
+        <entry key="..\:/Users/JP0061/AndroidStudioProjects/RealTimeMonitoring/app/src/main/res/drawable/qr_scanner.xml" value="0.31837606837606836" />
+        <entry key="..\:/Users/JP0061/AndroidStudioProjects/RealTimeMonitoring/app/src/main/res/drawable/round_button.xml" value="0.3880208333333333" />
+        <entry key="..\:/Users/JP0061/AndroidStudioProjects/RealTimeMonitoring/app/src/main/res/drawable/round_button_all.xml" value="0.3880208333333333" />
+        <entry key="..\:/Users/JP0061/AndroidStudioProjects/RealTimeMonitoring/app/src/main/res/drawable/round_button_green.xml" value="0.3880208333333333" />
+        <entry key="..\:/Users/JP0061/AndroidStudioProjects/RealTimeMonitoring/app/src/main/res/layout/activity_bluetooth_conn.xml" value="0.33055555555555555" />
+        <entry key="..\:/Users/JP0061/AndroidStudioProjects/RealTimeMonitoring/app/src/main/res/layout/activity_camera.xml" value="0.371875" />
+        <entry key="..\:/Users/JP0061/AndroidStudioProjects/RealTimeMonitoring/app/src/main/res/layout/activity_controlling.xml" value="0.371875" />
+        <entry key="..\:/Users/JP0061/AndroidStudioProjects/RealTimeMonitoring/app/src/main/res/layout/activity_engineer.xml" value="0.33" />
+        <entry key="..\:/Users/JP0061/AndroidStudioProjects/RealTimeMonitoring/app/src/main/res/layout/activity_engineer_repair.xml" value="0.371875" />
+        <entry key="..\:/Users/JP0061/AndroidStudioProjects/RealTimeMonitoring/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/JP0061/AndroidStudioProjects/RealTimeMonitoring/app/src/main/res/layout/activity_main2.xml" value="0.33055555555555555" />
+        <entry key="..\:/Users/JP0061/AndroidStudioProjects/RealTimeMonitoring/app/src/main/res/layout/activity_others.xml" value="0.25" />
+        <entry key="..\:/Users/JP0061/AndroidStudioProjects/RealTimeMonitoring/app/src/main/res/layout/activity_prompt_eng.xml" value="0.371875" />
+        <entry key="..\:/Users/JP0061/AndroidStudioProjects/RealTimeMonitoring/app/src/main/res/layout/activity_select_device.xml" value="0.33055555555555555" />
+        <entry key="..\:/Users/JP0061/AndroidStudioProjects/RealTimeMonitoring/app/src/main/res/layout/activity_splashscreen.xml" value="0.2935897435897436" />
+        <entry key="..\:/Users/JP0061/AndroidStudioProjects/RealTimeMonitoring/app/src/main/res/layout/list_item.xml" value="0.371875" />
+        <entry key="..\:/Users/JP0061/AndroidStudioProjects/RealTimeMonitoring/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1735042735042735" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
