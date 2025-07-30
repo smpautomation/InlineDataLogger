@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.bluetooth.le.ScanResult;
 import android.content.BroadcastReceiver;
@@ -36,6 +37,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.BatteryManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
@@ -43,6 +45,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.view.KeyEvent;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -148,6 +152,9 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
     volatile boolean stopWorker;
     //endregion
 
+    private static final String ADMIN_PASSWORD = "loyalblood"; // Change this
+    private boolean isKioskModeEnabled = true;
+
     @SuppressLint({"SetTextI18n", "NewApi"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +163,9 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
         ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         AlertDialog.Builder builder2 = new AlertDialog.Builder(MainActivity.this);
+
+        enableKioskMode();
+        setupPasswordDialog();
 
         //region read textfile for server ip
         StringBuilder myData = new StringBuilder();
@@ -764,6 +774,137 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
         //endregion
 
     }
+
+    //region kiosk mode
+    private void enableKioskMode() {
+        // Hide status bar and navigation bar
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_FULLSCREEN |
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
+                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        );
+
+        // Keep screen on
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isKioskModeEnabled) {
+            // Don't allow back button to exit
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (isKioskModeEnabled) {
+            // Immediately return to foreground
+            ActivityManager activityManager = (ActivityManager) getApplicationContext()
+                    .getSystemService(Context.ACTIVITY_SERVICE);
+
+            activityManager.moveTaskToFront(getTaskId(), 0);
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (isKioskModeEnabled) {
+            // Disable home button, recent apps, etc.
+            if (keyCode == KeyEvent.KEYCODE_HOME ||
+                    keyCode == KeyEvent.KEYCODE_MENU ||
+                    keyCode == KeyEvent.KEYCODE_SEARCH ||
+                    keyCode == KeyEvent.KEYCODE_BACK) {
+                return true;
+            }
+        }
+
+        // Handle recent apps button for newer Android versions
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            if (keyCode == 187) { // KEYCODE_APP_SWITCH (recent apps)
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void setupPasswordDialog() {
+        // Add a hidden button or gesture to trigger password dialog
+        // For example, long press on a specific area
+        View triggerView = findViewById(R.id.hidden_trigger); // Add this view to your layout
+        if (triggerView != null) {
+            triggerView.setOnLongClickListener(v -> {
+                showPasswordDialog();
+                return true;
+            });
+        }
+    }
+
+    private void showPasswordDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Exit Kiosk Mode");
+
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        input.setHint("Enter admin password");
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            String password = input.getText().toString();
+            if (ADMIN_PASSWORD.equals(password)) {
+                disableKioskMode();
+            } else {
+                Toast.makeText(this, "Incorrect password", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+
+        AlertDialog dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.show();
+    }
+
+    private void disableKioskMode() {
+        isKioskModeEnabled = false;
+
+        // Restore normal UI visibility
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+
+        // Remove keep screen on flag
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        Toast.makeText(this, "Kiosk mode disabled", Toast.LENGTH_SHORT).show();
+
+        // Optionally finish the activity or navigate elsewhere
+        // finish();
+    }
+
+    // Override to prevent app from being killed
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (isKioskModeEnabled) {
+            // Restart the activity if it's being stopped
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (isKioskModeEnabled && hasFocus) {
+            enableKioskMode();
+        }
+    }
+//endregion
 
     //region bluetooth
     void beginListenForData() {
