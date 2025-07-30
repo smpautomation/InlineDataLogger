@@ -753,6 +753,15 @@
             android:textSize="10sp"
             tools:ignore="HardcodedText,SmallSp,SpUsage" />
 
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:id="@+id/hidden_trigger"
+            android:layout_gravity="center"
+            android:text="Kiosk Mode Off"
+            android:textSize="10sp"
+            tools:ignore="HardcodedText,SmallSp,SpUsage" />
+
         <ImageButton
             android:id="@+id/search"
             android:layout_width="44dp"
