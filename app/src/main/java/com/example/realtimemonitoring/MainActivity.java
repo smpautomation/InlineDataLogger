@@ -32,6 +32,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
@@ -103,7 +104,7 @@ import android.content.BroadcastReceiver;
 
 public class MainActivity extends AppCompatActivity implements MainActivity_getmachinedata.AsyncResponse, MainActivity_insertstatus.AsyncResponse, MainActivity_machineinsertstatus.AsyncResponse, MainActivity_getprocessflow.AsyncResponse, MainActivity_getcurrentprocess.AsyncResponse, MainActivity_getLotDetails.AsyncResponse, MainActivity_getLastLotData.AsyncResponse{
     //region variable declarations
-    Button btnOP, btnAdjustment, btnChangeLot, btnNoWIP, btnBreaktime, btnCalib, btnUndereepm, btnStandby, btnSetup, btnMachineStop, btnmanualenc, btnOPProto, btnOthers;
+    Button btnOP, btnAdjustment, btnChangeLot, btnNoWIP, btnBreaktime, btnCalib, btnUndereepm, btnStandby, btnStandbyNOP, btnSetup, btnMachineStop, btnmanualenc, btnOPProto, btnOthers;
     ImageButton qrButton;
     IntentIntegrator intentIntegrator;
     Activity activity;
@@ -122,8 +123,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
     MediaPlayer mp;
     CountDownTimer cTimer = null;
     CountDownTimer ccTimer = null;
-    Boolean bop = false, bmerr = false, bchlt = false, bnw = false, bbt = false, bms = false, bueepm = false, bst = false, bmain = false, bmf = false, bopp = false, bothers = false;
-    Boolean[] bolarray = {bop, bmerr, bchlt, bnw, bbt, bms, bueepm, bst, bmain, bmf, bopp, bothers};
+    Boolean bop = false, bmerr = false, bchlt = false, bnw = false, bbt = false, bms = false, bueepm = false, bst = false, bstnop = false, bmain = false, bmf = false, bopp = false, bothers = false;
+    Boolean[] bolarray = {bop, bmerr, bchlt, bnw, bbt, bms, bueepm, bst, bstnop, bmain, bmf, bopp, bothers};
     Intent intent;
     TableRow row1pflow, row2pflow, row3pflow, row4pflow, row5pflow, bufferrow;
     Button p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p0;
@@ -155,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
     private static final String ADMIN_PASSWORD = "loyalblood"; // Change this
     private boolean isKioskModeEnabled = true;
 
+
     @SuppressLint({"SetTextI18n", "NewApi"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,8 +166,17 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         AlertDialog.Builder builder2 = new AlertDialog.Builder(MainActivity.this);
 
-        enableKioskMode();
+
+        // Check if app is set as default launcher
+        //checkAndRequestLauncherPermission();
+        //handleLauncherIntent(getIntent());
+        setupKioskModeOn();
         setupPasswordDialog();
+        setupRestartDialog();
+
+
+
+
 
         //region read textfile for server ip
         StringBuilder myData = new StringBuilder();
@@ -216,6 +227,7 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
         btnCalib = findViewById(R.id.btn_calib);
         btnUndereepm = findViewById(R.id.btn_undereepm);
         btnStandby = findViewById(R.id.btn_Standby);
+        btnStandbyNOP = findViewById(R.id.btn_StandbyNOP);
         btnSetup = findViewById(R.id.btn_Setup);
         btnMachineStop = findViewById(R.id.btn_machinestop);
         btnmanualenc = findViewById(R.id.btn_manualencode);
@@ -495,7 +507,7 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             return true;
         });
         btnStandby.setOnLongClickListener(v -> {
-            curr_stats = "Standby";
+            curr_stats = "Standby(No Plan)";
             txtCurrStats.setText(curr_stats);
             cancelTimerwaitforStop();
             cancelTimer();
@@ -503,6 +515,40 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
 
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_green));
             bst = true;
+            resetbtnColor();
+            /*alertdialogremarksinput();
+            txtRemarks.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+                @Override
+                public void afterTextChanged(Editable s) {
+                    txtCurrStats.setText(curr_stats);
+                    remarks = "";
+                    constraintLayout.setBackgroundColor(Color.argb(100, 255, 255, 255));
+                }
+            });*/
+            btnMachineStop.setEnabled(true);
+            main_insertstatus();
+            try{
+                sendData("13");// check patlite
+            }catch (Exception ex){
+                Toast.makeText(this, "Check Patlite Error: " + ex.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+            return true;
+        });
+        btnStandbyNOP.setOnLongClickListener(v -> {
+            curr_stats = "Standby(No Operator)";
+            txtCurrStats.setText(curr_stats);
+            cancelTimerwaitforStop();
+            cancelTimer();
+            //constraintLayout.setBackgroundColor(Color.argb(100, 255, 255, 255));
+
+            btnStandbyNOP.setBackground(ContextCompat.getDrawable(context, round_button_green));
+            bstnop = true;
             resetbtnColor();
             /*alertdialogremarksinput();
             txtRemarks.addTextChangedListener(new TextWatcher() {
@@ -776,6 +822,23 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
     }
 
     //region kiosk mode
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleLauncherIntent(intent);
+    }
+
+    private void handleLauncherIntent(Intent intent) {
+        String action = intent.getAction();
+        if (Intent.ACTION_MAIN.equals(action)) {
+            if (intent.hasCategory(Intent.CATEGORY_HOME)) {
+                // This was launched as home screen
+                //enableKioskMode();
+            }
+        }
+    }
+
     private void enableKioskMode() {
         // Hide status bar and navigation bar
         getWindow().getDecorView().setSystemUiVisibility(
@@ -843,6 +906,82 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
                 return true;
             });
         }
+
+        // Add another trigger for launcher settings (optional)
+//        View launcherSettingsView = findViewById(R.id.launcher_settings_trigger);
+//        if (launcherSettingsView != null) {
+//            launcherSettingsView.setOnLongClickListener(v -> {
+//                openLauncherSettings();
+//                return true;
+//            });
+//        }
+    }
+
+    private void setupRestartDialog(){
+        View restartView = findViewById(R.id.restart_trigger);
+        if(restartView != null){
+            restartView.setOnLongClickListener(v -> {
+                showRestartDialog();
+                return true;
+            });
+        }
+    }
+
+    private void showRestartDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Restart Application");
+        builder.setMessage("You are about to restart the application. Please confirm to restart");
+        builder.setPositiveButton("CONFIRM", (dialog, which) -> {
+            PackageManager packageManager = context.getPackageManager();
+            Intent intent = packageManager.getLaunchIntentForPackage(context.getPackageName());
+            ComponentName componentName = intent.getComponent();
+            Intent mainIntent = Intent.makeRestartActivityTask(componentName);
+            context.startActivity(mainIntent);
+            Runtime.getRuntime().exit(0);
+        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+        AlertDialog dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.show();
+    }
+
+    private void setupKioskModeOn(){
+        View kioskOn = findViewById(R.id.kiosk_on);
+        if(kioskOn != null){
+            kioskOn.setOnLongClickListener(v -> {
+                triggerKioskMode();
+                return true;
+            });
+        }
+    }
+
+    private void triggerKioskMode(){
+        enableKioskMode();
+    }
+
+    private void openLauncherSettings() {
+        try {
+            // Open home screen settings where user can set default launcher
+            Intent intent = new Intent(android.provider.Settings.ACTION_HOME_SETTINGS);
+            startActivity(intent);
+        } catch (Exception e) {
+            // Fallback: open general app settings
+            Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_SETTINGS);
+            startActivity(intent);
+        }
+    }
+
+    private void requestSetAsDefaultLauncher() {
+        try {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(this, "Please set this app as default launcher in Settings",
+                    Toast.LENGTH_LONG).show();
+            openLauncherSettings();
+        }
     }
 
     private void showPasswordDialog() {
@@ -870,6 +1009,28 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
         dialog.show();
     }
 
+    private boolean isDefaultLauncher() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        ResolveInfo resolveInfo = getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        String currentHomePackage = resolveInfo.activityInfo.packageName;
+        return getPackageName().equals(currentHomePackage);
+    }
+
+//    private void checkAndRequestLauncherPermission() {
+//        if (!isDefaultLauncher()) {
+//            // Show dialog asking user to set as default launcher
+//            new AlertDialog.Builder(this)
+//                    .setTitle("Set as Default Launcher")
+//                    .setMessage("For full kiosk functionality, please set this app as your default launcher.")
+//                    .setPositiveButton("Open Settings", (dialog, which) -> requestSetAsDefaultLauncher())
+//                    .setNegativeButton("Skip", null)
+//                    .show();
+//        }else{
+//            enableKioskMode();
+//        }
+//    }
+
     private void disableKioskMode() {
         isKioskModeEnabled = false;
 
@@ -891,9 +1052,9 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
         super.onStop();
         if (isKioskModeEnabled) {
             // Restart the activity if it's being stopped
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+//            Intent intent = new Intent(this, MainActivity.class);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(intent);
         }
     }
 
@@ -901,7 +1062,7 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if (isKioskModeEnabled && hasFocus) {
-            enableKioskMode();
+            //enableKioskMode();
         }
     }
 //endregion
@@ -1867,6 +2028,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bst = false;
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstnop = false;
+            btnStandbyNOP.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmain = false;
             btnSetup.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmf = false;
@@ -1890,6 +2053,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bst = false;
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstnop = false;
+            btnStandbyNOP.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmain = false;
             btnSetup.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmf = false;
@@ -1913,6 +2078,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bst = false;
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstnop = false;
+            btnStandbyNOP.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmain = false;
             btnSetup.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmf = false;
@@ -1936,6 +2103,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bst = false;
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstnop = false;
+            btnStandbyNOP.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmain = false;
             btnSetup.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmf = false;
@@ -1959,6 +2128,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bst = false;
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstnop = false;
+            btnStandbyNOP.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmain = false;
             btnSetup.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmf = false;
@@ -1982,6 +2153,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bst = false;
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstnop = false;
+            btnStandbyNOP.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmain = false;
             btnSetup.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmf = false;
@@ -2005,6 +2178,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnOP.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bst = false;
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstnop = false;
+            btnStandbyNOP.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmain = false;
             btnSetup.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmf = false;
@@ -2026,6 +2201,33 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnMachineStop.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bueepm = false;
             btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstnop = false;
+            btnStandbyNOP.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bop = false;
+            btnOP.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bmain = false;
+            btnSetup.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bmf = false;
+            btnCalib.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bopp = false;
+            btnOPProto.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bothers = false;
+            btnOthers.setBackground(ContextCompat.getDrawable(context, round_button_all));
+        } else if (bstnop) {
+            bmerr = false;
+            btnAdjustment.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bchlt = false;
+            btnChangeLot.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bnw = false;
+            btnNoWIP.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bbt = false;
+            btnBreaktime.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bms = false;
+            btnMachineStop.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bueepm = false;
+            btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bst = false;
+            btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bop = false;
             btnOP.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmain = false;
@@ -2051,6 +2253,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bst = false;
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstnop = false;
+            btnStandbyNOP.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bop = false;
             btnOP.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmf = false;
@@ -2074,6 +2278,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bst = false;
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstnop = false;
+            btnStandbyNOP.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmain = false;
             btnSetup.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bop = false;
@@ -2097,6 +2303,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bst = false;
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstnop = false;
+            btnStandbyNOP.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmain = false;
             btnSetup.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bop = false;
@@ -2120,6 +2328,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bst = false;
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstnop = false;
+            btnStandbyNOP.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmain = false;
             btnSetup.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bop = false;
@@ -2143,6 +2353,8 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
             btnUndereepm.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bst = false;
             btnStandby.setBackground(ContextCompat.getDrawable(context, round_button_all));
+            bstnop = false;
+            btnStandbyNOP.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bmain = false;
             btnSetup.setBackground(ContextCompat.getDrawable(context, round_button_all));
             bop = false;
@@ -2160,6 +2372,7 @@ public class MainActivity extends AppCompatActivity implements MainActivity_getm
         bbt = false;bms = false;
         bueepm = false;
         bst = false;
+        bstnop = false;
         bmain = false;
         bop = false;
         bmf = false;

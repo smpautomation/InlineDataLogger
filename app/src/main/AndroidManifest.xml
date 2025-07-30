@@ -86,7 +86,22 @@
             android:name=".MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            tools:ignore="IntentFilterExportedReceiver,LockedOrientationActivity" />
+            tools:ignore="IntentFilterExportedReceiver,LockedOrientationActivity">
+
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <!-- Additional intent filter for home replacement -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"

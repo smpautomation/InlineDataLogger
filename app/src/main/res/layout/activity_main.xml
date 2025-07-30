@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="40dp"
-                android:text="AUTOMATION ENGINEERING DEPARTMENT\n                                 v1.5"
+                android:text="AUTOMATION ENGINEERING DEPARTMENT\n                                 v2.0"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
             <TextView
@@ -598,7 +598,7 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:layout_marginTop="2dp">
 
             <androidx.appcompat.widget.AppCompatButton
@@ -608,19 +608,19 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/round_button_all"
-                android:text="Standby"
+                android:text="Standby(No Plan)"
                 android:textColor="@color/white"
                 app:icon="@drawable/round_button_all"
                 tools:ignore="HardcodedText" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_Breaktime"
+                android:id="@+id/btn_StandbyNOP"
                 android:layout_width="140dp"
-                android:layout_height="66dp"
+                android:layout_height="70dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="0dp"
                 android:background="@drawable/round_button_all"
-                android:text="Breaktime"
+                android:text="Standby(No Operator)"
                 android:textColor="@color/white"
                 app:icon="@drawable/round_button_all"
                 tools:ignore="HardcodedText" />
@@ -709,18 +709,40 @@
                 tools:ignore="HardcodedText" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_machinestop"
+                android:id="@+id/btn_Breaktime"
                 android:layout_width="140dp"
                 android:layout_height="66dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/round_button_all"
+                android:text="Breaktime"
+                android:textColor="@color/white"
+                app:icon="@drawable/round_button_all"
+                tools:ignore="HardcodedText" />
+
+
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_machinestop"
+                android:layout_width="140dp"
+                android:layout_height="66dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/round_button_all"
                 android:text="MACHINE STOP"
                 android:textColor="@color/white"
                 app:icon="@drawable/round_button_all"
                 tools:ignore="HardcodedText" />
-
         </TableRow>
+
+
 
 
 
@@ -753,13 +775,50 @@
             android:textSize="10sp"
             tools:ignore="HardcodedText,SmallSp,SpUsage" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:id="@+id/hidden_trigger"
+                android:text="Kiosk Mode Off"
+                android:textSize="10sp"
+                android:layout_marginEnd="20dp"
+                android:background="@android:color/transparent"
+                tools:ignore="HardcodedText,SmallSp,SpUsage" />
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:id="@+id/kiosk_on"
+                android:text="Kiosk Mode ON"
+                android:textSize="10sp"
+                android:layout_marginEnd="20dp"
+                android:background="@android:color/transparent"
+                tools:ignore="HardcodedText,SmallSp,SpUsage" />
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:id="@+id/restart_trigger"
+                android:text="Restart"
+                android:textSize="10sp"
+                android:background="@android:color/transparent"
+                tools:ignore="HardcodedText,SmallSp,SpUsage" />
+
+        </LinearLayout>
+
         <Button
             android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:id="@+id/hidden_trigger"
-            android:layout_gravity="center"
-            android:text="Kiosk Mode Off"
+            android:layout_height="80dp"
+            android:text=""
             android:textSize="10sp"
+            android:background="@android:color/transparent"
             tools:ignore="HardcodedText,SmallSp,SpUsage" />
 
         <ImageButton
